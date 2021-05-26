@@ -48,6 +48,8 @@ class Game extends React.Component {
 			history: [{ squares: Array(9).fill(null) }],
 			stepNumber: 0,
 			xIsNext: true,
+			click: { col: null, row: null },
+			coordinates: [],
 		};
 	}
 
@@ -55,6 +57,7 @@ class Game extends React.Component {
 		const history = this.state.history.slice(0, this.state.stepNumber + 1);
 		const current = history[history.length - 1];
 		const squares = current.squares.slice();
+
 		if (calculateWinner(squares) || squares[i]) {
 			return;
 		}
@@ -68,6 +71,85 @@ class Game extends React.Component {
 			stepNumber: history.length,
 			xIsNext: !this.state.xIsNext,
 		});
+
+		switch (i) {
+			case 0:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 1,
+						row: 1,
+					}),
+				});
+				break;
+			case 1:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 2,
+						row: 1,
+					}),
+				});
+				break;
+			case 2:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 3,
+						row: 1,
+					}),
+				});
+				break;
+			case 3:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 1,
+						row: 2,
+					}),
+				});
+				break;
+			case 4:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 2,
+						row: 2,
+					}),
+				});
+				break;
+			case 5:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 3,
+						row: 2,
+					}),
+				});
+
+				break;
+			case 6:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 1,
+						row: 3,
+					}),
+				});
+				break;
+			case 7:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 2,
+						row: 3,
+					}),
+				});
+				break;
+			case 8:
+				this.setState({
+					coordinates: this.state.coordinates.concat({
+						col: 3,
+						row: 3,
+					}),
+				});
+				break;
+
+			default:
+				break;
+		}
 	}
 
 	jumpTo(step) {
@@ -90,9 +172,37 @@ class Game extends React.Component {
 
 		const moves = history.map((step, move) => {
 			const desc = move ? "Go to move #" + move : "Go to game start";
+
+			if (desc === "Go to game start") {
+				return (
+					<li key={move}>
+						<button onClick={() => this.jumpTo(move)}>
+							{desc}
+						</button>
+					</li>
+				);
+			}
+			console.log(move);
+			console.log(this.state.coordinates[move - 1]);
+
 			return (
 				<li key={move}>
-					<button onClick={() => this.jumpTo(move)}>{desc}</button>
+					<button
+						onClick={() => this.jumpTo(move)}
+						style={
+							move === history.indexOf(current)
+								? { fontWeight: "bold" }
+								: { fontWeight: "500" }
+						}
+						// style={{ fontWeight: "bold" }}
+					>
+						<bold>
+							{desc} /
+							{` (${this.state.coordinates[move - 1].col}, ${
+								this.state.coordinates[move - 1].row
+							})`}
+						</bold>
+					</button>
 				</li>
 			);
 		});
