@@ -48,8 +48,9 @@ class Game extends React.Component {
 			history: [{ squares: Array(9).fill(null) }],
 			stepNumber: 0,
 			xIsNext: true,
-			click: { col: null, row: null },
 			coordinates: [],
+			moves: [],
+			toggle: true,
 		};
 	}
 
@@ -160,15 +161,10 @@ class Game extends React.Component {
 	}
 
 	render() {
-		const history = this.state.history;
+		var history = this.state.history;
 		const current = history[this.state.stepNumber];
 		const winner = calculateWinner(current.squares);
 		let status;
-		if (winner) {
-			status = "Winner: " + winner;
-		} else {
-			status = "Next player: " + (this.state.xIsNext ? "X" : "O");
-		}
 
 		const moves = history.map((step, move) => {
 			const desc = move ? "Go to move #" + move : "Go to game start";
@@ -182,8 +178,6 @@ class Game extends React.Component {
 					</li>
 				);
 			}
-			console.log(move);
-			console.log(this.state.coordinates[move - 1]);
 
 			return (
 				<li key={move}>
@@ -194,18 +188,21 @@ class Game extends React.Component {
 								? { fontWeight: "bold" }
 								: { fontWeight: "500" }
 						}
-						// style={{ fontWeight: "bold" }}
 					>
-						<bold>
-							{desc} /
-							{` (${this.state.coordinates[move - 1].col}, ${
-								this.state.coordinates[move - 1].row
-							})`}
-						</bold>
+						{desc} /
+						{` (${this.state.coordinates[move - 1].col}, ${
+							this.state.coordinates[move - 1].row
+						})`}
 					</button>
 				</li>
 			);
 		});
+
+		if (winner) {
+			status = "Winner: " + winner;
+		} else {
+			status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+		}
 
 		return (
 			<div className="game">
@@ -216,7 +213,7 @@ class Game extends React.Component {
 					/>
 				</div>
 				<div className="game-info">
-					<div>{status}</div>
+					<div className="status">{status}</div>
 					<ol>{moves}</ol>
 				</div>
 			</div>

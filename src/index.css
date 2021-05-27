@@ -15,15 +15,18 @@ ul {
     display: table;
 }
 
+
+
 .status {
     margin-bottom: 10px;
 }
 
 .square {
-    background: rgb(194, 186, 186);
-    border: 1px solid rgb(63, 59, 59);
+    background: rgb(104, 101, 101);
+    border: 3px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     float: left;
-    font-size: 24px;
+    font-size: 34px;
     font-weight: bold;
     line-height: 34px;
     height: 74px;
@@ -32,6 +35,7 @@ ul {
     padding: 0;
     text-align: center;
     width: 74px;
+    border-radius: 6px;
 }
 
 .square:focus {
@@ -46,10 +50,47 @@ ul {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    /* width: 50%; */
     align-items: center;
     min-height: 100vh;
 }
 
 .game-info {
     margin-left: 20px;
+}
+
+button {
+    height: 1.8rem;
+    font-size: .9rem;
+    width: 200px;
+    background-color: rgb(163, 162, 150);
+    border: 1px solid rgb(255, 255, 255);
+    text-transform: uppercase;
+    color: rgb(34, 33, 19);
+    cursor: pointer;
+}
+
+ol {
+    list-style-type: none;
+}
+
+.status {
+    font-size: 1.4rem;
+    color: rgb(35, 102, 102);
+    font-weight: 600;
+    margin-left: 2rem;
+}
+
+@media (max-width: 700px) {
+    .game {
+        flex-direction: column;
+    }
+
+    .game-info {
+        margin-right: 3rem;
+        margin-top: 2rem;
+        position: relative;
+        bottom: 10px;
+    }
+
 }
